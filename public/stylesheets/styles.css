@@ -1,0 +1,16 @@
+@font-face {
+  font-family: "SFGushingMeadow";
+  src: url("/stylesheets/SF Gushing Meadow.ttf");
+}
+
+body { font-family: sans-serif; }
+
+h1 { font-size: 3.5em; font-family: SFGushingMeadow; color:#CC1100; }
+
+#messages .info { 
+  width:50%;
+  color: green; 
+  border: 1px solid green; 
+  margin: 1em; 
+  background: #98FB98; 
+}

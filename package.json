@@ -1,13 +1,16 @@
 {
-  "author": "Steve",
-  "name": "hk-test",
-  "description": "heroku node test",
+  "author": "Steve Laing",
+  "name": "HerokuFileUploader",
+  "description": "Heroku File Upload to S3",
   "version": "0.0.1",
   "repository": {
     "url": ""
   },
   "dependencies": {
-    "express": ">=2.5.8"
+    "express": ">=2.5.8",
+    "express-messages": ">=0.0.2",
+    "jade": ">=0.0.2",
+    "knox": ">=0.0.9"
   },
   "devDependencies": {},
   "optionalDependencies": {},
