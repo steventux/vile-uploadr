@@ -1,4 +1,12 @@
 != messages()
 form(action="/upload", method="post", enctype="multipart/form-data")
+  -if (!s3)
+    label S3 Key :
+    input(type="text", name="key")
+    label S3 Secret :
+    input(type="text", name="secret")
+    label S3 Bucket :
+    input(type="text", name="bucket")
+  label File :
   input(type="file", name="uploadFile")
   input(type="submit", name="upload", value="Upload!")

@@ -1,16 +1,27 @@
 @font-face {
   font-family: "SFGushingMeadow";
-  src: url("/stylesheets/SF Gushing Meadow.ttf");
+  src: url("SF Gushing Meadow.ttf");
 }
 
-body { font-family: sans-serif; }
-
-h1 { font-size: 3.5em; font-family: SFGushingMeadow; color:#CC1100; }
+h1 { 
+  font-size: 3.5em; 
+  font-family: SFGushingMeadow; 
+  color:#CC1100; 
+}
 
 #messages .info { 
-  width:50%;
+  width:40%;
   color: green; 
   border: 1px solid green; 
-  margin: 1em; 
+  padding: 1em; 
   background: #98FB98; 
 }
+
+label { float:left; }
+input[type="text"], input[type="file"] { 
+  margin: 0 0 4px 100px; 
+  width: 30em; 
+  display:block; 
+}
+
+

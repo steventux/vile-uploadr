@@ -4,30 +4,43 @@ var express = require('express'),
     app = express.createServer(),
     port = process.env.PORT || 8080;
 
-client = knox.createClient({
-  key: 'YOUR_S3_KEY'
-, secret: 'YOUR_S3_SECRET'
-, bucket: 'YOUR_S3_BUCKET'
-});
-
 app.dynamicHelpers({ messages: require('express-messages') });
 
 app.configure(function(){
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
   app.use(express.cookieParser());
-  app.use(express.session({ secret: "marzipan is private" }));
   app.use(express.bodyParser());
-  app.use(express.static(__dirname + '/public'));
+  app.use(express.session({ 
+    secret: "marzipan is private", 
+    store: new express.session.MemoryStore({ reapInterval: 60000 * 10 }) 
+  }));
+  app.use(express.static(__dirname + '/public/'));
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 });
 
 app.get('/', function(req, res){
-  res.render('new');
+  res.render('new', {s3: req.session.s3});
 });
 
+
 app.post('/upload', function(req, res){
+  
+  var s3sessionParams = function(key, secret, bucket) {
+    if (key && secret && bucket) { // assign
+      req.session.s3 = { key:key, secret:secret, bucket:bucket };
+    } else if (req.session.s3) { // return params
+      return req.session.s3;
+    } else {
+      return false;
+    }
+  } 
+
   fs.readFile(req.files.uploadFile.path, function (err, data) {
+    if (!s3sessionParams())
+      s3sessionParams(req.body.key, req.body.secret, req.body.bucket);
+    var client = knox.createClient(s3sessionParams());
+    
     var s3req = client.put("assets/" + req.files.uploadFile.name, {
         'Content-Length': data.length
       , 'Content-Type': req.files.uploadFile.type
